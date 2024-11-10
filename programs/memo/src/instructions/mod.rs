@@ -1,18 +1,18 @@
-use core::slice::from_raw_parts;
-
-use pinocchio::{instruction::{self, AccountMeta, Instruction, Signer}, program::invoke_signed, ProgramResult};
-
-
+use pinocchio::{
+    instruction::{Instruction, Signer},
+    program::invoke_signed,
+    ProgramResult,
+};
 
 /// Memo instruction
-/// 
+///
 /// ### Accounts
 ///     None required
 /// ### Instruction Data:
 ///     - UTF 8 encoded
 pub struct Memo<'a> {
-    /// Memo 
-    pub input: &'a[u8],
+    /// Memo
+    pub input: &'a [u8],
 }
 
 impl<'a> Memo<'a> {
@@ -26,13 +26,9 @@ impl<'a> Memo<'a> {
         let instruction = Instruction {
             program_id: &crate::ID,
             accounts: &[],
-            data: self.input
+            data: self.input,
         };
 
-        invoke_signed(
-            &instruction,
-            &[],
-            signers,
-        )
+        invoke_signed(&instruction, &[], signers)
     }
 }
